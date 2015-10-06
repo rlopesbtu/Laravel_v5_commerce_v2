@@ -100,7 +100,6 @@ class ProductsController extends Controller
           if($meuStorage->exists($image->id.'.'.$image->extension)){
               $meuStorage->delete($image->id.'.'.$image->extension);
           }
-
         return redirect()->route('products.images',['id'=>$product->id]);
     }
 }

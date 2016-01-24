@@ -13,9 +13,11 @@ class ProductsController extends Controller
 
     private $productModel;
 
+
     public function __construct(product $productModel)
     {
         $this->productModel = $productModel;
+
     }
 
 	public function index()
@@ -35,7 +37,7 @@ class ProductsController extends Controller
         $input = $request->all();
         $product = $this->productModel->fill($input);
         $product->save();
-        return redirect('admin/products');
+        return redirect('products');
     }
 
     public function edit($id, Category $category)
@@ -47,9 +49,33 @@ class ProductsController extends Controller
 
     public function destroy($id)
     {
-        $this->productModel->find($id)->delete();
+        $product = Product::find($id);
+        return view('products.delete', compact('product'));
+
+
+    }
+
+    public function delete($id)
+    {
+        $product = Product::find($id);
+        foreach($product->images()->getResults() as $image) {
+
+            $this->removeImage($image);
+
+        }
+        $product->delete();
         return redirect()->route('products');
     }
+
+    private function removeImage(ProductImage $image)
+    {
+
+        $meuStorage = Storage::disk('public_local');
+        if($meuStorage->exists($image->id.'.'.$image->extension)){
+            $meuStorage->delete($image->id.'.'.$image->extension);
+        }
+        $image->delete();
+     }
 
     public function update(Requests\productRequest $request, $id)
     {
@@ -60,6 +86,7 @@ class ProductsController extends Controller
     public function images($id)
     {
        $product = $this->productModel->find($id);
+
         return view('products.images', compact('product'));
     }
 
@@ -80,26 +107,20 @@ class ProductsController extends Controller
     {
         $file = $request->file('image');
         $extension = $file->getClientOriginalExtension();
-
         $image = $productImage::create(['product_id'=>$id, 'extension'=>$extension]);
-
         Storage::disk('public_local')->put($image->id.'.'.$extension, File::get($file));
-
         return redirect()->route('products.images',['id'=>$id]);
     }
 
     public function destroyImage(ProductImage $productImage, $id)
     {
         $image = $productImage->find($id);
-        if(file_exists(public_path().'/uploads'.$image->id.'.'.$image->extension)){
-            Storage::disk('public_local')->delete($image->id.'.'.$image->extension);
+        $meuStorage = Storage::disk('public_local');
+        if($meuStorage->exists($image->id.'.'.$image->extension)){
+            $meuStorage->delete($image->id.'.'.$image->extension);
         }
-         $product = $image->product;
-         $image->delete();
-         $meuStorage = Storage::disk('public_local');
-          if($meuStorage->exists($image->id.'.'.$image->extension)){
-              $meuStorage->delete($image->id.'.'.$image->extension);
-          }
+        $product = $image->product;
+        $image->delete();
         return redirect()->route('products.images',['id'=>$product->id]);
     }
 }

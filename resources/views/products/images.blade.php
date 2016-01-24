@@ -21,9 +21,7 @@
             <th>Image</th>
             <th>Extension</th>
             <th>Action</th>
-
         </tr>
-
         @foreach($product->images as $image)
             <tr>
                 <td>{{ $image->id }}</td>

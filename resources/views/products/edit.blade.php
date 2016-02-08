@@ -44,8 +44,10 @@
                 {!! Form::hidden('recommend',0) !!}
                 {!! Form::checkbox('recommend',1,$product->recommend) !!}
             <div class="form-group">
-
-
+                {!! Form::label('tags', 'Tags: ', ['class' => 'col-sm-2 control-label']) !!}
+                <div class='col-sm-10'>
+                    {!! Form::textarea('tags', $product->tag_list, ['class' => 'form-control']) !!}
+                </div>
         <div class="form-group">
              {!! Form::submit('Save Product',['class'=>'btn btn-primary ']) !!}
         </div>

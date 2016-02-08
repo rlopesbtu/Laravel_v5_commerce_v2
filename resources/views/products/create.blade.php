@@ -42,16 +42,19 @@
             {!! Form::label('recommend','Recommended:') !!}
             {!! Form::hidden('recommend',0) !!}
             {!! Form::checkbox('recommend') !!}
-        <div class="form-group">
-
-
-        <div class="form-group">
-             {!! Form::submit('Add Product',['class'=>'btn btn-primary form-control']) !!}
         </div>
 
-        {!! Form::close() !!}
-
-
-
+            <div class='form-group'>
+                {!! Form::label('tags', 'Tags: ', ['class' => 'col-sm-2 control-label']) !!}
+                <div class='col-sm-10'>
+                    {!! Form::textarea('tags', null, ['class' => 'form-control']) !!}
+                </div>
+            </div>
+            <div class='form-group'>
+                {!! Form::submit('Add Product', ['class' => 'btn btn-primary']) !!}
+                <a href='{{ route('products') }}' class='btn btn-danger'>Cancel</a>
+            </div>
+            {!! Form::close() !!}
+    </div>
      </div>
  @endsection

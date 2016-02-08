@@ -32,13 +32,22 @@ class ProductsController extends Controller
         return view('products.create', compact('categories'));
     }
 
-    public function store(Requests\productRequest $request)
+   public function store(Requests\productRequest $request)
     {
         $input = $request->all();
+
+        $arrayTags = $this->tagToArray($input['tags']);
+
         $product = $this->productModel->fill($input);
         $product->save();
-        return redirect('products');
+
+        $product->tags()->sync($arrayTags);
+
+
+        return redirect()->route('products');
     }
+
+
 
     public function edit($id, Category $category)
     {
@@ -51,17 +60,13 @@ class ProductsController extends Controller
     {
         $product = Product::find($id);
         return view('products.delete', compact('product'));
-
-
     }
 
     public function delete($id)
     {
         $product = Product::find($id);
         foreach($product->images()->getResults() as $image) {
-
             $this->removeImage($image);
-
         }
         $product->delete();
         return redirect()->route('products');
@@ -79,7 +84,14 @@ class ProductsController extends Controller
 
     public function update(Requests\productRequest $request, $id)
     {
+
+       $input = $request->all();
+       $arrayTags = $this->tagToArray($input['tags']);
+
        $this->productModel->find($id)->update($request->all());
+       $product = Product::find($id);
+       $product->tags()->sync($arrayTags);
+
        return redirect()->route('products');
     }
 
@@ -123,4 +135,20 @@ class ProductsController extends Controller
         $image->delete();
         return redirect()->route('products.images',['id'=>$product->id]);
     }
+
+
+    private function tagToArray($tags)
+    {
+        $tags = explode(",", $tags);
+        $tags = array_map('trim', $tags);
+        $tagCollection = [];
+        foreach ($tags as $tag) {
+           $t = Tag::firstOrCreate(['name' => $tag]);
+
+            array_push($tagCollection, $t->id);
+        }
+
+        return $tagCollection;
+    }
+
 }

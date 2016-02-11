@@ -15,11 +15,11 @@
                     <div class="single-products">
                         <div class="productinfo text-center">
 
-
-
-                            <img src="http://commerce.dev:10088/uploads/10.jpg" alt="" />
-
-
+                            @if(count($product->images))
+                                <img src="{{ url('uploads/'.$product->images->first()->id.'.'.$product->images->first()->extension)}}" alt="" />
+                            @else
+                                <img src="{{url('images/no-img.jpg')}}" alt="" width="200" />
+                             @endif
                             <h2>R$ 9,00</h2>
                             <p>magni</p>
                             <a href="http://commerce.dev:10088/product/2" class="btn btn-default add-to-cart"><i class="fa fa-crosshairs"></i>Mais detalhes</a>

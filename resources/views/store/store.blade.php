@@ -1,13 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Ricardo_2
- * Date: 30/01/2016
- * Time: 21:49
- */
-?>
-
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -120,11 +111,8 @@
 <section>
     <div class="container">
         <div class="row">
-
             @yield('categories')
-
-           @yield('content')
-
+            @yield('content')
         </div>
     </div>
     <div class="common-modal modal fade" id="common-Modal1" tabindex="-1" role="dialog" aria-hidden="true">
@@ -145,7 +133,7 @@
     <div class="footer-bottom">
         <div class="container">
             <div class="row">
-                <p class="pull-left">Copyright © 2013 E-Shop Inc. All rights reserved.</p>
+                <p class="pull-left">Copyright Â© 2013 E-Shop Inc. All rights reserved.</p>
                 <p class="pull-right">Designed by <span><a target="_blank" href="http://invoinn.com/">InvoInn</a></span></p>
             </div>
         </div>

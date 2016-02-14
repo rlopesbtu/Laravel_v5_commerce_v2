@@ -10,11 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', ['as' => 'store.index', 'uses' => 'StoreController@index']);
+Route::get('product/{id}', ['as' => 'store.product', 'uses' => 'StoreController@product']);
+Route::get('category/{id}', ['as' => 'store.category', 'uses' => 'StoreController@category']);
+
 Route::group(['prefix'=>'admin','where'=>['id'=>'[0-9]+']],function() {
-
-	Route::group(['prefix'=>'categories'],function() {
-
-
+     Route::group(['prefix'=>'categories'],function() {
 		Route::get('', ['as' => 'categories', 'uses' => 'CategoriesController@index']);
 		Route::post('', ['as' => 'categories.store', 'uses' => 'CategoriesController@store']);
 		Route::get('create', ['as' => 'categories.create', 'uses' => 'CategoriesController@create']);
@@ -25,20 +26,14 @@ Route::group(['prefix'=>'admin','where'=>['id'=>'[0-9]+']],function() {
 	});
 
 	Route::group(['prefix'=>'products'], function() {
-
-
 		Route::get('', ['as' => 'products', 'uses' => 'ProductsController@index']);
 		Route::get('create', ['as' => 'products.create', 'uses' => 'ProductsController@create']);
 		Route::post('', ['as' => 'products.store', 'uses' => 'ProductsController@store']);
 		Route::get('{id}/destroy', ['as' => 'products.destroy', 'uses' => 'ProductsController@destroy']);
-
 		Route::get('{id}/edit', ['as' => 'products.edit', 'uses' => 'ProductsController@edit']);
 		Route::put('{id}/update', ['as' => 'products.update', 'uses' => 'ProductsController@update']);
-
 		Route::get('{product}/delete', ['as' => 'confirm_delete_product', 'uses' => 'ProductsController@destroy']);
 		Route::delete('{id}', ['as' => 'delete_product', 'uses' => 'ProductsController@delete']);
-
-
 
 		Route::group(['prefix' => 'images'], function() {
 		Route::get('{id}/product',['as' => 'products.images', 'uses' => 'ProductsController@images']);
@@ -49,12 +44,8 @@ Route::group(['prefix'=>'admin','where'=>['id'=>'[0-9]+']],function() {
 });
 
 
-
-
 });
 
-
-Route::get('/', 'StoreController@index');
 
 Route::get('home', 'HomeController@index');
 

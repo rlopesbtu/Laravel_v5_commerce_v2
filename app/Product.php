@@ -52,4 +52,10 @@ class Product extends Model {
     }
 
 
+    public function scopeOfTag($query, $id)
+    {
+        return $query->where('tag_id', '=', $id);
+    }
+
+
 }

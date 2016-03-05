@@ -13,4 +13,14 @@ class tag extends Model {
         return $this->belongsToMany('CodeCommerce\Product');
     }
 
+    public function findOrCreate($tagArray)
+    {
+        $tag = $this->where('name','=', $tagArray['name'])->first();
+        if($tag){
+            return $tag;
+        }
+
+        return $this->create($tagArray);
+    }
+
 }

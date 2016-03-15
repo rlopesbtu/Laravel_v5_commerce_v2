@@ -70,11 +70,10 @@ class CartController extends Controller
     }
 
 
-    public function update(Requests\CartRequest $request, $id)
+    public function update($id, $refresh)
     {
-        $qtd = $request->get("qtd");
         $cart = $this->getCart();
-        $cart->novaQtd($id, $qtd);
+        $cart->novaQtd($id, $refresh);
 
         Session::set('cart', $cart);
 

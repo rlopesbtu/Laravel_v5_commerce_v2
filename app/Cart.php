@@ -48,10 +48,14 @@ class Cart
         return $total;
     }
 
-    public function novaQtd($id, $qtd)
+    public function novaQtd($id, $refresh)
     {
-        if($qtd > 0) {
-            $this->items[$id]['qtd'] = $qtd;
+        if (isset($this->items[$id])) {
+            if ($refresh == 1) {
+                $this->items[$id]['qtd'] += 1;
+            } elseif ($refresh == 0) {
+                $this->items[$id]['qtd'] -= 1;
+            }
         }
     }
 

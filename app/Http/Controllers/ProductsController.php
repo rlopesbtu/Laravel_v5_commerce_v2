@@ -16,12 +16,14 @@ class ProductsController extends Controller
 
     public function __construct(product $productModel)
     {
+     //   $this->middleware('auth'); //auth é o nome do middleware que está declarado no Kernel.php
         $this->productModel = $productModel;
 
     }
 
 	public function index()
     {
+
         $products = $this->productModel->paginate(10);
         return view('products.index', compact('products'));
     }

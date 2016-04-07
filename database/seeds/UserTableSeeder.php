@@ -11,9 +11,17 @@ class UserTableSeeder extends Seeder
 
     public function run()
     {
+
         DB::table('users')->truncate();
 
      $faker = Faker::create();
+
+        User::create([
+
+           'name' => 'Ricardo',
+           'email' => 'riaplopes@gmail.com',
+           'password' => Hash::make(123456),
+        ]);
 
         foreach(range(1,10) as $i){
 

@@ -48,6 +48,11 @@ class Cart
         return $total;
     }
 
+    public function clear()
+    {
+        $this->items = [];
+    }
+
     public function novaQtd($id, $refresh)
     {
         if (isset($this->items[$id])) {

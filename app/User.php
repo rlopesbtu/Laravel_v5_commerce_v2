@@ -15,7 +15,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 *
 	 * @var string
 	 */
-	protected $table = 'users';
+	protected $table = 'users'; /*Força qual é  a tabela de banco de dados que esse cara ta trabaljando*/
+
 
 	/**
 	 * The attributes that are mass assignable.
@@ -30,5 +31,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 * @var array
 	 */
 	protected $hidden = ['password', 'remember_token'];
+
+	public function orders()
+	{
+		/**Um usuário pode ter vários pedidos*/
+		return $this->hasMany('CodeCommerce\Order');
+	}
 
 }
